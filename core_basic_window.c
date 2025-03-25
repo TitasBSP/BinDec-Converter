@@ -27,7 +27,6 @@ int main()
     // Binary text
     float TextBinaryX = 350;
     float TextBinaryY = 235;
-    char TextBinary[8] = "BINARY";
     
     // Decimal button settings
     float ButtonDecimalX = 300;
@@ -39,7 +38,6 @@ int main()
     // Decimal text
     float TextDecimalX = 340;
     float TextDecimalY = 365;
-    char TextDecimal[8] = "DECIMAL";
     
     // ----------------- BINARY - SCREEN ---------------------------- //
     
@@ -79,9 +77,6 @@ int main()
     
     // --------------------- MISCELLANEOUS ------------------------ //
     
-    char Copyright[64] = "© 2025 - Elevens";
-    
-    char title[64] = "Binary & Decimal Converter";
 
     InitWindow(screenWidth, screenHeight, "Binary & Decimal Converter");
 
@@ -100,6 +95,31 @@ int main()
     char outputTextDecimal[9];
     
     bool errorDecimal = false;
+    
+    //-------------------------------- MULTI-LANGUAGE SUPPORT -----------------------------//
+    
+    bool englishLang = true;
+    bool norwegianLang = false;
+    bool lithuanianLang = false;
+    
+    char TextBinary[8] = "BINARY";
+    char TextDecimal[8] = "DECIMAL";
+    
+    char Copyright[64] = "© 2025 - Elevens";
+    
+    char title[64] = "Binary & Decimal Converter";
+    
+    char binaryAsk[128] = "Please enter a BINARY number to convert\n               (00000000 - 11111111)";
+    char binaryConvert[16] = "CONVERT";
+    char binaryAskResult[128] = "The binary equivalent to [              ] is";
+    char returnBinary[32] = "PRESS [SPACE] TO RETURN";
+    
+    char decimalAsk[128] = "Please enter a DECIMAL number to convert\n                       (1-255)";
+    char decimalConvert[16] = "CONVERT";
+    char decimalValueException[32] = "VALUE MUST BE BETWEEN [1-256]!";
+    char decimalAskRes[128] = "The decimal equivalent to [      ] is";
+    char returnDecimal[32] = "PRESS [SPACE] TO RETURN";
+    
     
     //-------------------------------- Handling user input --------------------------------//
     
@@ -307,7 +327,7 @@ int main()
                 
                 ClearBackground(BLUE);
                 if (alphaConvertBinary < 1.0f) alphaConvertBinary += 0.04f;
-                DrawText("Please enter a BINARY number to convert\n               (00000000 - 11111111)", 50, 100, 40, Fade(WHITE, alphaConvertBinary)); // Main title
+                DrawText(binaryAsk, 50, 100, 40, Fade(WHITE, alphaConvertBinary)); // Main title
                 DrawRectangle(windowBinaryX+10, windowBinaryY+10, 500, 75, Fade(BLACK, alphaConvertBinary)); // Binary input shadow
                 DrawRectangleRec(windowBinary, Fade(WHITE, alphaConvertBinary)); // Binary input
                 
@@ -319,21 +339,21 @@ int main()
                     DrawRectangleRec(convertBinary, Fade(LIGHTGRAY, alphaButtonBinary)); // Redraws text
                 }
                 
-                DrawText("CONVERT", 375, 370, 35, Fade(BLACK, alphaConvertBinary)); // Convert TEXT
+                DrawText(binaryConvert, 375, 370, 35, Fade(BLACK, alphaConvertBinary)); // Convert TEXT
                 DrawText(binaryInput, 250, 260, 60, Fade(BLACK, alphaConvertBinary)); // Displays the typed numbers
                 
             } else if (displayBinaryResult) {
                 ClearBackground(BLUE);
                 
                 if (alphaOutputBinary < 1.0f) alphaOutputBinary += 0.08f; // Fade-in animation
-                DrawText("The binary equivalent to [              ] is", 80, 150, 40, Fade(WHITE, alphaOutputBinary)); // Main title
+                DrawText(binaryAskResult, 80, 150, 40, Fade(WHITE, alphaOutputBinary)); // Main title
                 DrawText(binaryInput, 630, 150, 40, Fade(RED, alphaOutputBinary)); // Displays the previously typed number
                 
                 DrawRectangle(outputBinaryX+10, outputBinaryY+10, 200, 75, Fade(BLACK, alphaOutputBinary)); // Display shadow
                 DrawRectangleRec(outputBinary, Fade(WHITE, alphaOutputBinary)); // Display
                 DrawText(outputTextBinary, 410, 250, 60, Fade(BLACK, alphaOutputBinary)); // Converted number
                 
-                DrawText("PRESS [SPACE] TO RETURN", 320, 400, 20, Fade(WHITE, alphaOutputBinary)); // Small text
+                DrawText(returnBinary, 320, 400, 20, Fade(WHITE, alphaOutputBinary)); // Small text
                 
                 
             }
@@ -345,7 +365,7 @@ int main()
                 
                 ClearBackground(BLUE);
                 if (alphaConvertDecimal < 1.0f) alphaConvertDecimal += 0.04f; // Fade-in animation
-                DrawText("Please enter a DECIMAL number to convert\n                       (1-255)", 30, 100, 40, Fade(WHITE, alphaConvertDecimal)); // Main title
+                DrawText(decimalAsk, 30, 100, 40, Fade(WHITE, alphaConvertDecimal)); // Main title
                 DrawRectangle(windowDecimalX+10, windowDecimalY+10, 300, 75, Fade(BLACK, alphaConvertDecimal)); // Decimal input shadow
                 DrawRectangleRec(windowDecimal, Fade(WHITE, alphaConvertDecimal)); // Decimal input
                 
@@ -357,26 +377,27 @@ int main()
                     DrawRectangleRec(convertBinary, Fade(LIGHTGRAY, alphaButtonDecimal)); // Redraws text
                 }
                 
-                DrawText("CONVERT", 375, 370, 35, Fade(BLACK, alphaConvertDecimal)); // Convert TEXT
+                DrawText(decimalConvert, 375, 370, 35, Fade(BLACK, alphaConvertDecimal)); // Convert TEXT
                 DrawText(decimalInput, 330, 260, 60, Fade(BLACK, alphaConvertDecimal)); // Shows the typed number
                 
                 if (errorDecimal) {
-                    DrawText("VALUE MUST BE BETWEEN [1-256]!", 280, 450, 20, Fade(YELLOW, alphaConvertDecimal)); // Error with small text for overflowing values
+                    DrawText(decimalValueException, 280, 450, 20, Fade(YELLOW, alphaConvertDecimal)); // Error with small text for overflowing values
                 }
                 
                 
             } else if (displayDecimalResult) {
                 ClearBackground(BLUE);
+               
                 
                 if (alphaOutputDecimal < 1.0f) alphaOutputDecimal += 0.08f; // Fade-in animation
-                DrawText("The decimal equivalent to [      ] is", 80, 150, 40, Fade(WHITE, alphaOutputDecimal)); // Main title
+                DrawText(decimalAskRes, 80, 150, 40, Fade(WHITE, alphaOutputDecimal)); // Main title
                 DrawText(decimalInput, 650, 150, 40, Fade(RED, alphaOutputDecimal)); // Previously typed in number
                 
                 DrawRectangle(outputDecimalX+10, outputDecimalY+10, 500, 75, Fade(BLACK, alphaOutputDecimal)); // Display shadow
                 DrawRectangleRec(outputDecimal, Fade(WHITE, alphaOutputDecimal)); // Display
                 DrawText(outputTextDecimal, 250, 260, 60, Fade(BLACK, alphaOutputDecimal)); // Converted number
                 
-                DrawText("PRESS [SPACE] TO RETURN", 320, 400, 20, Fade(WHITE, alphaOutputDecimal)); // Small text
+                DrawText(returnDecimal, 320, 400, 20, Fade(WHITE, alphaOutputDecimal)); // Small text
                    
             }
         }
