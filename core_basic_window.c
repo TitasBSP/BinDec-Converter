@@ -75,6 +75,24 @@ int main()
     
     float alphaOutputDecimal = 0.0f;
     
+    // --------------------- LANGUAGE-BAR ------------------------- //
+    
+    float langBarX = 770;
+    float langBarY = 480;
+    Rectangle langBar = {langBarX, langBarY, 200, 100};
+    
+    float langTextX = 790;
+    float langTextY = 500;
+    float langTextS = 30;
+    
+    float alphaLangBar = 0.0f;
+    
+    float langPopUpX = 770;
+    float langPopUpY = 380;
+    Rectangle langPopUp = {langPopUpX, langPopUpY, 200, 200};
+    
+    float alphaLangPop = 0.0f;
+    
     // --------------------- MISCELLANEOUS ------------------------ //
     
 
@@ -84,9 +102,11 @@ int main()
     
     // Transitions & Such
     bool clearScreen = false;
+    bool langPop = false;
     
     bool displayBinary = false;
     bool displayDecimal = false;
+    
     
     bool displayBinaryResult = false;
     bool displayDecimalResult = false;
@@ -100,7 +120,6 @@ int main()
     
     bool englishLang = false;
     bool norwegianLang = true;
-    bool lithuanianLang = false;
     
     char TextBinary[8] = "BINARY";
     char TextDecimal[8] = "DECIMAL";
@@ -120,27 +139,34 @@ int main()
     char decimalAskRes[128] = "The decimal equivalent to [      ] is";
     char returnDecimal[32] = "PRESS [SPACE] TO RETURN";
     
+    char langText[16] = "LANGUAGES";
+    
     //---------------------------------- NORWEGIAN LANGUAGE ---------------------------------//
     
-    if (englishLang && !norwegianLang && !lithuanianLang) {
+    if (englishLang && !norwegianLang) {
         main();
-    } else if (!englishLang && norwegianLang && !lithuanianLang) { // Replaces english with norwegian!!!
+    } else if (!englishLang && norwegianLang) { // Replaces english with norwegian!!!
     
         memcpy(&TextBinary[0], "BINÆR", 6);
         memcpy(&TextDecimal[0], "TITALL", 7);
         
         memcpy(&title[0], "Binær- & Titallskonverter", 27);
         
-        memcpy(&binaryAsk[0], "Vennligst tast inn et binærtall\n for å konvertere\n               (00000000 - 11111111)", 89);
+        memcpy(&binaryAsk[0], "Vennligst tast inn et BINÆRTALL\n         for å konvertere\n         (00000000 - 11111111)", 98);
         memcpy(&binaryConvert[0], "KONVERTER", 9);
         memcpy(&binaryAskResult[0], "Binærtallet som tilsvarer til [              ] er", 48);
         memcpy(&returnBinary[0], "TRYKK [SPACE] TIL MENYEN", 24);
         
-        memcpy(&decimalAsk[0], "Vennligst tast inn et titall\n      for å konvertere\n            (1-255)", 89);
+        memcpy(&decimalAsk[0], "Vennligst tast inn et TITALL\n      for å konvertere\n            (1-255)", 89);
         memcpy(&decimalConvert[0], "KONVERTER", 9);
         memcpy(&decimalValueException[0], "VERDIEN MÅ VÆRE MELLOM 1-255", 31);
         memcpy(&decimalAskRes[0], "Titallet som tilsvarer til [      ] er", 48);
         memcpy(&returnDecimal[0], "TRYKK [SPACE] TIL MENYEN", 24);
+        
+        memcpy(&langText[0], "SPRÅK", 16);
+        langTextX += 15;
+        langTextY -= 5;
+        langTextS += 5;
         
         titleX += 5;
         TextBinaryX += 5;
@@ -178,6 +204,8 @@ int main()
         // Handling color change and confirming clicks on buttons
         bool isHoveringBinary = CheckCollisionPointRec(mousePos, ButtonBinary);
         bool isHoveringDecimal = CheckCollisionPointRec(mousePos, ButtonDecimal);
+        
+        bool isHoveringLangBar = CheckCollisionPointRec(mousePos, langBar);
         
         bool isHoveringConvertBinary = CheckCollisionPointRec(mousePos, convertBinary);
         bool isHoveringConvertDecimal = CheckCollisionPointRec(mousePos, convertDecimal);
@@ -293,6 +321,93 @@ int main()
             displayDecimal = true;
         }
         
+        if (isHoveringLangBar) {
+            while (alphaLangPop < 1.0f) {
+               alphaLangPop += 0.05f; // Fade-in animation
+                             
+            }
+            DrawRectangleRec(langPopUp, Fade(DARKBLUE, alphaLangPop)); 
+            
+            // NORWEGIAN FLAG //
+            
+            // Row 1
+            DrawRectangle(780, 390, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(785, 390, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(790, 390, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(795, 390, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(800, 390, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(805, 390, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(810, 390, 5, 5, Fade(RED, alphaLangPop));
+            
+            // Row 2
+            DrawRectangle(780, 395, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(785, 395, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(790, 395, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(795, 395, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(800, 395, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(805, 395, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(810, 395, 5, 5, Fade(WHITE, alphaLangPop));
+            
+            // Row 3
+            DrawRectangle(780, 400, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(785, 400, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(790, 400, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(795, 400, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(800, 400, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(805, 400, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(810, 400, 5, 5, Fade(BLUE, alphaLangPop));
+            
+            // Row 4
+            DrawRectangle(780, 405, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(785, 405, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(790, 405, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(795, 405, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(800, 405, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(805, 405, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(810, 405, 5, 5, Fade(WHITE, alphaLangPop));
+            
+            // Row 5
+            DrawRectangle(780, 410, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(785, 410, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(790, 410, 5, 5, Fade(BLUE, alphaLangPop));
+            DrawRectangle(795, 410, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(800, 410, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(805, 410, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(810, 410, 5, 5, Fade(RED, alphaLangPop));
+            
+            // ENGLISH FLAG //
+            
+            // Row 1
+            DrawRectangle(780, 440, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(785, 440, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(790, 440, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(795, 440, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(800, 440, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(805, 440, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(810, 440, 5, 5, Fade(WHITE, alphaLangPop));
+            
+            // Row 2
+            DrawRectangle(780, 445, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(785, 445, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(790, 445, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(795, 445, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(800, 445, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(805, 445, 5, 5, Fade(WHITE, alphaLangPop));
+            DrawRectangle(810, 445, 5, 5, Fade(WHITE, alphaLangPop));
+            
+            // Row 3
+            DrawRectangle(780, 450, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(785, 450, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(790, 450, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(795, 450, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(800, 450, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(805, 450, 5, 5, Fade(RED, alphaLangPop));
+            DrawRectangle(810, 450, 5, 5, Fade(RED, alphaLangPop));
+            
+        }
+        
+       
+        
         // ---------------------------- BINARY ---------------------------- //
         
         if (displayBinaryResult || displayDecimalResult) { 
@@ -308,7 +423,8 @@ int main()
                 memset(decimalInput, 0, sizeof(decimalInput)); 
                 
                 clearScreen = false;  
-                errorDecimal = false; 
+                errorDecimal = false;
+                langPop = false;
                 
                 alphaButtonBinary = 0.0f;
                 alphaButtonDecimal = 0.0f;
@@ -339,7 +455,13 @@ int main()
                 DrawRectangleRec(ButtonDecimal, Fade(WHITE, alphaButtonDecimal)); // Decimal button
                 DrawText(TextDecimal, TextDecimalX, TextDecimalY, 50, Fade(BLACK, alphaButtonDecimal)); // Decimal text
                 DrawText(Copyright, 360, 500, 20, Fade(WHITE, alphaButtonDecimal)); // Copyright text
-            }
+                
+                if (alphaLangBar < 1.0f) alphaLangBar += 0.02f; // Fade-in animation
+                DrawRectangleRec(langBar, Fade(DARKBLUE, alphaLangBar)); // Languages text
+                DrawText(langText, langTextX, langTextY, langTextS, Fade(WHITE, alphaLangBar));
+                
+            } 
+ 
            
             if (isHoveringBinary) {
                 DrawRectangleRec(ButtonBinary, Fade(LIGHTGRAY, alphaButtonBinary)); // Fades into light-gray during hover
@@ -362,19 +484,34 @@ int main()
                 
                 ClearBackground(BLUE);
                 if (alphaConvertBinary < 1.0f) alphaConvertBinary += 0.04f;
-                DrawText(binaryAsk, 50, 100, 40, Fade(WHITE, alphaConvertBinary)); // Main title
+                DrawText(binaryAsk, 140, 100, 40, Fade(WHITE, alphaConvertBinary)); // Main title
                 DrawRectangle(windowBinaryX+10, windowBinaryY+10, 500, 75, Fade(BLACK, alphaConvertBinary)); // Binary input shadow
                 DrawRectangleRec(windowBinary, Fade(WHITE, alphaConvertBinary)); // Binary input
                 
-                DrawRectangle(convertBinaryX+10, convertBinaryY+10, 200, 50, Fade(BLACK, alphaConvertBinary)); // Convert button shadow
-                DrawRectangleRec(convertBinary, Fade(WHITE, alphaConvertBinary)); // Convert button
-                
-                if (isHoveringConvertBinary) {
-                    DrawRectangle(convertBinaryX+10, convertBinaryY+10, 200, 50, Fade(BLACK, alphaConvertBinary)); // Fades into light-gray during hover
-                    DrawRectangleRec(convertBinary, Fade(LIGHTGRAY, alphaButtonBinary)); // Redraws text
+                if (englishLang && !norwegianLang) {
+                    DrawRectangle(convertBinaryX+10, convertBinaryY+10, 200, 50, Fade(BLACK, alphaConvertBinary)); // Convert button shadow
+                    DrawRectangleRec(convertBinary, Fade(WHITE, alphaConvertBinary)); // Convert button
+                    
+                    if (isHoveringConvertBinary) {
+                        DrawRectangle(convertBinaryX+10, convertBinaryY+10, 200, 50, Fade(BLACK, alphaConvertBinary)); // Fades into light-gray during hover
+                        DrawRectangleRec(convertBinary, Fade(LIGHTGRAY, alphaButtonBinary)); // Redraws text
+                    }
+                    
+                    DrawText(binaryConvert, 375, 370, 35, Fade(BLACK, alphaConvertBinary)); // Convert TEXT
+                    
+                } else if (!englishLang && norwegianLang) {
+                    DrawRectangle(convertBinaryX-10, convertBinaryY+10, 250, 50, Fade(BLACK, alphaConvertBinary)); // Convert button shadow
+                    DrawRectangle(convertBinaryX-20, convertBinaryY, 250, 50, Fade(WHITE, alphaConvertBinary)); // Convert button
+                    
+                    if (isHoveringConvertBinary) {
+                        DrawRectangle(convertBinaryX-10, convertBinaryY+10, 250, 50, Fade(BLACK, alphaConvertBinary)); // Fades into light-gray during hover
+                        DrawRectangle(convertBinaryX-20, convertBinaryY, 250, 50, Fade(LIGHTGRAY, alphaButtonBinary)); // Redraws text
+                        DrawRectangle(convertBinaryX-20, convertBinaryY, 250, 50, Fade(LIGHTGRAY, alphaButtonBinary)); // Redraws text
+                    }
+                    
+                    DrawText(binaryConvert, 365, 370, 35, Fade(BLACK, alphaConvertBinary)); // Convert TEXT
                 }
                 
-                DrawText(binaryConvert, 375, 370, 35, Fade(BLACK, alphaConvertBinary)); // Convert TEXT
                 DrawText(binaryInput, 250, 260, 60, Fade(BLACK, alphaConvertBinary)); // Displays the typed numbers
                 
             } else if (displayBinaryResult) {
@@ -382,8 +519,12 @@ int main()
                 
                 if (alphaOutputBinary < 1.0f) alphaOutputBinary += 0.08f; // Fade-in animation
                 DrawText(binaryAskResult, 80, 150, 40, Fade(WHITE, alphaOutputBinary)); // Main title
-                DrawText(binaryInput, 630, 150, 40, Fade(RED, alphaOutputBinary)); // Displays the previously typed number
                 
+                if (englishLang && !norwegianLang) {
+                    DrawText(binaryInput, 630, 150, 40, Fade(RED, alphaOutputBinary)); // Displays the previously typed number
+                } else if (!englishLang && norwegianLang) {
+                    DrawText(binaryInput, 710, 150, 40, Fade(RED, alphaOutputBinary)); // Displays the previously typed number
+                }
                 DrawRectangle(outputBinaryX+10, outputBinaryY+10, 200, 75, Fade(BLACK, alphaOutputBinary)); // Display shadow
                 DrawRectangleRec(outputBinary, Fade(WHITE, alphaOutputBinary)); // Display
                 DrawText(outputTextBinary, 410, 250, 60, Fade(BLACK, alphaOutputBinary)); // Converted number
@@ -400,25 +541,25 @@ int main()
                 
                 ClearBackground(BLUE);
                 if (alphaConvertDecimal < 1.0f) alphaConvertDecimal += 0.04f; // Fade-in animation
-                    if (englishLang && !norwegianLang && !lithuanianLang) {
+                    if (englishLang && !norwegianLang) {
                         DrawText(decimalAsk, 30, 100, 40, Fade(WHITE, alphaConvertDecimal)); // Main title
-                    } else if (!englishLang && norwegianLang && !lithuanianLang) {
-                        DrawText(decimalAsk, 200, 100, 40, Fade(WHITE, alphaConvertDecimal)); // Main title
+                    } else if (!englishLang && norwegianLang) {
+                        DrawText(decimalAsk, 190, 100, 40, Fade(WHITE, alphaConvertDecimal)); // Main title
                     }
                     
                 DrawRectangle(windowDecimalX+10, windowDecimalY+10, 300, 75, Fade(BLACK, alphaConvertDecimal)); // Decimal input shadow
                 DrawRectangleRec(windowDecimal, Fade(WHITE, alphaConvertDecimal)); // Decimal input
                 
-                if (englishLang && !norwegianLang && !lithuanianLang) {
+                if (englishLang && !norwegianLang) {
                     DrawRectangle(convertDecimalX+10, convertDecimalY+10, 200, 50, Fade(BLACK, alphaConvertDecimal)); // Convert button shadow
                     DrawRectangleRec(convertDecimal, Fade(WHITE, alphaConvertDecimal)); // Convert button                    
-                } else if (!englishLang && norwegianLang && !lithuanianLang) {
+                } else if (!englishLang && norwegianLang) {
                     DrawRectangle(convertDecimalX-10, convertDecimalY+10, 250, 50, Fade(BLACK, alphaConvertDecimal)); // Convert button shadow
                     DrawRectangle(convertDecimalX-20, convertDecimalY, 250, 50, Fade(WHITE, alphaConvertDecimal)); // Convert button
                 }
                
                 
-                if (englishLang && !norwegianLang && !lithuanianLang) {
+                if (englishLang && !norwegianLang) {
                     DrawText(decimalConvert, 375, 370, 35, Fade(BLACK, alphaConvertDecimal)); // Convert TEXT           
                     
                     if (isHoveringConvertDecimal) {
@@ -427,7 +568,7 @@ int main()
                         DrawText(decimalConvert, 360, 370, 35, Fade(BLACK, alphaConvertDecimal));
                     }                    
                     
-                } else if (!englishLang && norwegianLang && !lithuanianLang) {
+                } else if (!englishLang && norwegianLang) {
                     DrawText(decimalConvert, 360, 370, 35, Fade(BLACK, alphaConvertDecimal));
                     
                     if (isHoveringConvertDecimal) {
@@ -440,9 +581,9 @@ int main()
                 
                 DrawText(decimalInput, 330, 260, 60, Fade(BLACK, alphaConvertDecimal)); // Shows the typed number
                 
-                if (errorDecimal && englishLang && !norwegianLang && !lithuanianLang) {
+                if (errorDecimal && englishLang && !norwegianLang) {
                     DrawText(decimalValueException, 280, 450, 20, Fade(YELLOW, alphaConvertDecimal)); // Error with small text for overflowing values
-                } else if (errorDecimal && !englishLang && norwegianLang && !lithuanianLang) {
+                } else if (errorDecimal && !englishLang && norwegianLang) {
                     DrawText(decimalValueException, 300, 450, 20, Fade(YELLOW, alphaConvertDecimal)); // Error with small text for overflowing values
                 }
                 
@@ -452,9 +593,9 @@ int main()
                
                 
                 if (alphaOutputDecimal < 1.0f) alphaOutputDecimal += 0.08f; // Fade-in animation
-                    if (englishLang && !norwegianLang && !lithuanianLang) {
+                    if (englishLang && !norwegianLang) {
                         DrawText(decimalAskRes, 80, 150, 40, Fade(WHITE, alphaOutputDecimal)); // Main title                        
-                    } else if (!englishLang && norwegianLang && !lithuanianLang) {
+                    } else if (!englishLang && norwegianLang) {
                         DrawText(decimalAskRes, 110, 150, 40, Fade(WHITE, alphaOutputDecimal));
                     }
 
