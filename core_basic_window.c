@@ -96,10 +96,10 @@ int main()
     
     bool errorDecimal = false;
     
-    //-------------------------------- MULTI-LANGUAGE SUPPORT -----------------------------//
+    //----------------------------- MULTI-LANGUAGE SUPPORT -----------------------------------//
     
-    bool englishLang = true;
-    bool norwegianLang = false;
+    bool englishLang = false;
+    bool norwegianLang = true;
     bool lithuanianLang = false;
     
     char TextBinary[8] = "BINARY";
@@ -116,9 +116,44 @@ int main()
     
     char decimalAsk[128] = "Please enter a DECIMAL number to convert\n                       (1-255)";
     char decimalConvert[16] = "CONVERT";
-    char decimalValueException[32] = "VALUE MUST BE BETWEEN [1-256]!";
+    char decimalValueException[32] = "VALUE MUST BE BETWEEN [1-255]!";
     char decimalAskRes[128] = "The decimal equivalent to [      ] is";
     char returnDecimal[32] = "PRESS [SPACE] TO RETURN";
+    
+    //---------------------------------- NORWEGIAN LANGUAGE ---------------------------------//
+    
+    if (englishLang && !norwegianLang && !lithuanianLang) {
+        main();
+    } else if (!englishLang && norwegianLang && !lithuanianLang) { // Replaces english with norwegian!!!
+    
+        memcpy(&TextBinary[0], "BINÆR", 6);
+        memcpy(&TextDecimal[0], "TITALL", 7);
+        
+        memcpy(&title[0], "Binær- & Titallskonverter", 27);
+        
+        memcpy(&binaryAsk[0], "Vennligst tast inn et binærtall\n for å konvertere\n               (00000000 - 11111111)", 89);
+        memcpy(&binaryConvert[0], "KONVERTER", 9);
+        memcpy(&binaryAskResult[0], "Binærtallet som tilsvarer til [              ] er", 48);
+        memcpy(&returnBinary[0], "TRYKK [SPACE] TIL MENYEN", 24);
+        
+        memcpy(&decimalAsk[0], "Vennligst tast inn et titall\n      for å konvertere\n            (1-255)", 89);
+        memcpy(&decimalConvert[0], "KONVERTER", 9);
+        memcpy(&decimalValueException[0], "VERDIEN MÅ VÆRE MELLOM 1-255", 31);
+        memcpy(&decimalAskRes[0], "Titallet som tilsvarer til [      ] er", 48);
+        memcpy(&returnDecimal[0], "TRYKK [SPACE] TIL MENYEN", 24);
+        
+        titleX += 5;
+        TextBinaryX += 5;
+        TextDecimalX += 5;
+    }
+    
+    // What needs adjusting:
+    // o title by x += 10
+    // o textBinary and decimal by x += 5
+    // o convert button
+    // o red text for equivalent
+    // o 
+
     
     
     //-------------------------------- Handling user input --------------------------------//
@@ -365,23 +400,50 @@ int main()
                 
                 ClearBackground(BLUE);
                 if (alphaConvertDecimal < 1.0f) alphaConvertDecimal += 0.04f; // Fade-in animation
-                DrawText(decimalAsk, 30, 100, 40, Fade(WHITE, alphaConvertDecimal)); // Main title
+                    if (englishLang && !norwegianLang && !lithuanianLang) {
+                        DrawText(decimalAsk, 30, 100, 40, Fade(WHITE, alphaConvertDecimal)); // Main title
+                    } else if (!englishLang && norwegianLang && !lithuanianLang) {
+                        DrawText(decimalAsk, 200, 100, 40, Fade(WHITE, alphaConvertDecimal)); // Main title
+                    }
+                    
                 DrawRectangle(windowDecimalX+10, windowDecimalY+10, 300, 75, Fade(BLACK, alphaConvertDecimal)); // Decimal input shadow
                 DrawRectangleRec(windowDecimal, Fade(WHITE, alphaConvertDecimal)); // Decimal input
                 
-                DrawRectangle(convertDecimalX+10, convertDecimalY+10, 200, 50, Fade(BLACK, alphaConvertDecimal)); // Convert button shadow
-                DrawRectangleRec(convertDecimal, Fade(WHITE, alphaConvertDecimal)); // Convert button
-                
-                if (isHoveringConvertDecimal) {
-                    DrawRectangle(convertDecimalX+10, convertDecimalY+10, 200, 50, Fade(BLACK, alphaConvertDecimal)); // Fades into light-gray during hover
-                    DrawRectangleRec(convertBinary, Fade(LIGHTGRAY, alphaButtonDecimal)); // Redraws text
+                if (englishLang && !norwegianLang && !lithuanianLang) {
+                    DrawRectangle(convertDecimalX+10, convertDecimalY+10, 200, 50, Fade(BLACK, alphaConvertDecimal)); // Convert button shadow
+                    DrawRectangleRec(convertDecimal, Fade(WHITE, alphaConvertDecimal)); // Convert button                    
+                } else if (!englishLang && norwegianLang && !lithuanianLang) {
+                    DrawRectangle(convertDecimalX-10, convertDecimalY+10, 250, 50, Fade(BLACK, alphaConvertDecimal)); // Convert button shadow
+                    DrawRectangle(convertDecimalX-20, convertDecimalY, 250, 50, Fade(WHITE, alphaConvertDecimal)); // Convert button
                 }
+               
                 
-                DrawText(decimalConvert, 375, 370, 35, Fade(BLACK, alphaConvertDecimal)); // Convert TEXT
+                if (englishLang && !norwegianLang && !lithuanianLang) {
+                    DrawText(decimalConvert, 375, 370, 35, Fade(BLACK, alphaConvertDecimal)); // Convert TEXT           
+                    
+                    if (isHoveringConvertDecimal) {
+                        DrawRectangle(convertDecimalX+10, convertDecimalY+10, 200, 50, Fade(BLACK, alphaConvertDecimal)); // Fades into light-gray during hover
+                        DrawRectangleRec(convertBinary, Fade(LIGHTGRAY, alphaButtonDecimal)); // Redraws text
+                        DrawText(decimalConvert, 360, 370, 35, Fade(BLACK, alphaConvertDecimal));
+                    }                    
+                    
+                } else if (!englishLang && norwegianLang && !lithuanianLang) {
+                    DrawText(decimalConvert, 360, 370, 35, Fade(BLACK, alphaConvertDecimal));
+                    
+                    if (isHoveringConvertDecimal) {
+                        DrawRectangle(convertDecimalX-10, convertDecimalY+10, 250, 50, Fade(BLACK, alphaConvertDecimal)); // Fades into light-gray during hover
+                        DrawRectangle(convertDecimalX-20, convertDecimalY, 250, 50, Fade(LIGHTGRAY, alphaButtonDecimal)); // Redraws text
+                        DrawText(decimalConvert, 360, 370, 35, Fade(BLACK, alphaConvertDecimal));
+                    }
+                }
+              
+                
                 DrawText(decimalInput, 330, 260, 60, Fade(BLACK, alphaConvertDecimal)); // Shows the typed number
                 
-                if (errorDecimal) {
+                if (errorDecimal && englishLang && !norwegianLang && !lithuanianLang) {
                     DrawText(decimalValueException, 280, 450, 20, Fade(YELLOW, alphaConvertDecimal)); // Error with small text for overflowing values
+                } else if (errorDecimal && !englishLang && norwegianLang && !lithuanianLang) {
+                    DrawText(decimalValueException, 300, 450, 20, Fade(YELLOW, alphaConvertDecimal)); // Error with small text for overflowing values
                 }
                 
                 
@@ -390,7 +452,12 @@ int main()
                
                 
                 if (alphaOutputDecimal < 1.0f) alphaOutputDecimal += 0.08f; // Fade-in animation
-                DrawText(decimalAskRes, 80, 150, 40, Fade(WHITE, alphaOutputDecimal)); // Main title
+                    if (englishLang && !norwegianLang && !lithuanianLang) {
+                        DrawText(decimalAskRes, 80, 150, 40, Fade(WHITE, alphaOutputDecimal)); // Main title                        
+                    } else if (!englishLang && norwegianLang && !lithuanianLang) {
+                        DrawText(decimalAskRes, 110, 150, 40, Fade(WHITE, alphaOutputDecimal));
+                    }
+
                 DrawText(decimalInput, 650, 150, 40, Fade(RED, alphaOutputDecimal)); // Previously typed in number
                 
                 DrawRectangle(outputDecimalX+10, outputDecimalY+10, 500, 75, Fade(BLACK, alphaOutputDecimal)); // Display shadow
