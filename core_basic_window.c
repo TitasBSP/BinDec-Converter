@@ -101,8 +101,8 @@ int main()
     float btnEnglishY = 430;
     Rectangle btnEnglish = {btnEnglishX, btnEnglishY, 150, 40};
     
-    float invisBtnNorsk = 1.0f;
-    float invisBtnEnglish = 1.0f;
+    float invisBtnNorsk = 0.0f;
+    float invisBtnEnglish = 0.0f;
     
     // --------------------- MISCELLANEOUS ------------------------ //
     
@@ -150,11 +150,7 @@ int main()
     char returnDecimal[32] = "PRESS [SPACE] TO RETURN";
     
     char langText[16] = "LANGUAGES";
-    
-    //---------------------------------- NORWEGIAN LANGUAGE ---------------------------------//
-    
 
-    
     //-------------------------------- Handling user input --------------------------------//
     
     char binaryInput[9] = "";
@@ -424,7 +420,9 @@ int main()
                     printf("english working");
                     fflush(stdout);
                     
-                    if (englishLang) {
+                }
+                
+                if (englishLang) {
                         memcpy(&TextBinary[0], "BINARY", 6);
                         memcpy(&TextDecimal[0], "DECIMAL", 7);
                         
@@ -450,6 +448,7 @@ int main()
                         titleX = 120;
                         TextBinaryX = 350;
                         TextDecimalX = 340;
+                      
                         
                     } else if (norwegianLang) { // Replaces english with norwegian!!!
     
@@ -478,8 +477,6 @@ int main()
                         TextBinaryX = 355;
                         TextDecimalX = 345;
                     }
-                }
-                
             }
         
         // ---------------------------- BINARY ---------------------------- //
@@ -502,8 +499,17 @@ int main()
                 
                 alphaButtonBinary = 0.0f;
                 alphaButtonDecimal = 0.0f;
+                
                 alphaConvertBinary = 0.0f;
                 alphaOutputBinary = 0.0f;
+                
+                alphaConvertDecimal = 0.0f;
+                alphaOutputDecimal = 0.0f;
+                
+                alphaLangBar = 0.0f;
+                alphaLangPop = 0.0f;
+
+
             }
         }
         
@@ -558,11 +564,11 @@ int main()
                 
                 ClearBackground(BLUE);
                 if (alphaConvertBinary < 1.0f) alphaConvertBinary += 0.04f;
-                DrawText(binaryAsk, 140, 100, 40, Fade(WHITE, alphaConvertBinary)); // Main title
                 DrawRectangle(windowBinaryX+10, windowBinaryY+10, 500, 75, Fade(BLACK, alphaConvertBinary)); // Binary input shadow
                 DrawRectangleRec(windowBinary, Fade(WHITE, alphaConvertBinary)); // Binary input
                 
                 if (englishLang && !norwegianLang) {
+                    DrawText(binaryAsk, 50, 100, 40, Fade(WHITE, alphaConvertBinary)); // Main title
                     DrawRectangle(convertBinaryX+10, convertBinaryY+10, 200, 50, Fade(BLACK, alphaConvertBinary)); // Convert button shadow
                     DrawRectangleRec(convertBinary, Fade(WHITE, alphaConvertBinary)); // Convert button
                     
@@ -574,6 +580,7 @@ int main()
                     DrawText(binaryConvert, 375, 370, 35, Fade(BLACK, alphaConvertBinary)); // Convert TEXT
                     
                 } else if (!englishLang && norwegianLang) {
+                    DrawText(binaryAsk, 140, 100, 40, Fade(WHITE, alphaConvertBinary)); // Main title
                     DrawRectangle(convertBinaryX-10, convertBinaryY+10, 250, 50, Fade(BLACK, alphaConvertBinary)); // Convert button shadow
                     DrawRectangle(convertBinaryX-20, convertBinaryY, 250, 50, Fade(WHITE, alphaConvertBinary)); // Convert button
                     
@@ -639,7 +646,7 @@ int main()
                     if (isHoveringConvertDecimal) {
                         DrawRectangle(convertDecimalX+10, convertDecimalY+10, 200, 50, Fade(BLACK, alphaConvertDecimal)); // Fades into light-gray during hover
                         DrawRectangleRec(convertBinary, Fade(LIGHTGRAY, alphaButtonDecimal)); // Redraws text
-                        DrawText(decimalConvert, 360, 370, 35, Fade(BLACK, alphaConvertDecimal));
+                        DrawText(decimalConvert, 375, 370, 35, Fade(BLACK, alphaConvertDecimal));
                     }                    
                     
                 } else if (!englishLang && norwegianLang) {
