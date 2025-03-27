@@ -81,9 +81,9 @@ int main()
     float langBarY = 480;
     Rectangle langBar = {langBarX, langBarY, 200, 100};
     
-    float langTextX = 800;
+    float langTextX = 790;
     float langTextY = 500;
-    float langTextS = 30;
+    float langTextS = 25;
     
     float alphaLangBar = 0.0f;
     
@@ -128,8 +128,8 @@ int main()
     
     //----------------------------- MULTI-LANGUAGE SUPPORT -----------------------------------//
     
-    bool englishLang = false;
-    bool norwegianLang = true;
+    bool englishLang = true;
+    bool norwegianLang = false;
     
     char TextBinary[8] = "BINARY";
     char TextDecimal[8] = "DECIMAL";
@@ -153,59 +153,7 @@ int main()
     
     //---------------------------------- NORWEGIAN LANGUAGE ---------------------------------//
     
-    if (englishLang) {
-        memcpy(&TextBinary[0], "BINARY", 6);
-        memcpy(&TextDecimal[0], "DECIMAL", 7);
-        
-        memcpy(&title[0], "Binary & Decimal Converter", 27);
-        
-        memcpy(&binaryAsk[0], "Please enter a BINARY number to convert\n               (00000000 - 11111111)", 98);
-        memcpy(&binaryConvert[0], "CONVERT", 9);
-        memcpy(&binaryAskResult[0], "The binary equivalent to [              ] is", 48);
-        memcpy(&returnBinary[0], "PRESS [SPACE] TO RETURN", 24);
-        
-        memcpy(&decimalAsk[0], "Please enter a DECIMAL number to convert\n                       (1-255)", 89);
-        memcpy(&decimalConvert[0], "CONVERT", 9);
-        memcpy(&decimalValueException[0], "VALUE MUST BE BETWEEN [1-255]!", 31);
-        memcpy(&decimalAskRes[0], "The decimal equivalent to [      ] is", 48);
-        memcpy(&returnDecimal[0], "PRESS [SPACE] TO RETURN", 24);
-        
-        memcpy(&langText[0], "LANGUAGES", 16);
-        langTextX -= 15;
-        langTextY += 5;
-        langTextS -= 5;
-        
-        titleX -= 5;
-        TextBinaryX -= 5;
-        TextDecimalX -= 5;
-        
-    } else if (norwegianLang) { // Replaces english with norwegian!!!
-    
-        memcpy(&TextBinary[0], "BINÆR", 6);
-        memcpy(&TextDecimal[0], "TITALL", 7);
-        
-        memcpy(&title[0], "Binær- & Titallskonverter", 27);
-        
-        memcpy(&binaryAsk[0], "Vennligst tast inn et BINÆRTALL\n         for å konvertere\n         (00000000 - 11111111)", 98);
-        memcpy(&binaryConvert[0], "KONVERTER", 9);
-        memcpy(&binaryAskResult[0], "Binærtallet som tilsvarer til [              ] er", 48);
-        memcpy(&returnBinary[0], "TRYKK [SPACE] TIL MENYEN", 24);
-        
-        memcpy(&decimalAsk[0], "Vennligst tast inn et TITALL\n      for å konvertere\n            (1-255)", 89);
-        memcpy(&decimalConvert[0], "KONVERTER", 9);
-        memcpy(&decimalValueException[0], "VERDIEN MÅ VÆRE MELLOM 1-255", 31);
-        memcpy(&decimalAskRes[0], "Titallet som tilsvarer til [      ] er", 48);
-        memcpy(&returnDecimal[0], "TRYKK [SPACE] TIL MENYEN", 24);
-        
-        memcpy(&langText[0], "SPRÅK", 16);
-        langTextX += 15;
-        langTextY -= 5;
-        langTextS += 5;
-        
-        titleX += 5;
-        TextBinaryX += 5;
-        TextDecimalX += 5;
-    }
+
     
     //-------------------------------- Handling user input --------------------------------//
     
@@ -475,6 +423,61 @@ int main()
                     
                     printf("english working");
                     fflush(stdout);
+                    
+                    if (englishLang) {
+                        memcpy(&TextBinary[0], "BINARY", 6);
+                        memcpy(&TextDecimal[0], "DECIMAL", 7);
+                        
+                        memcpy(&title[0], "Binary & Decimal Converter", 27);
+                        
+                        memcpy(&binaryAsk[0], "Please enter a BINARY number to convert\n               (00000000 - 11111111)", 98);
+                        memcpy(&binaryConvert[0], "CONVERT", 9);
+                        memcpy(&binaryAskResult[0], "The binary equivalent to [              ] is", 48);
+                        memcpy(&returnBinary[0], "PRESS [SPACE] TO RETURN", 24);
+                        
+                        memcpy(&decimalAsk[0], "Please enter a DECIMAL number to convert\n                       (1-255)", 89);
+                        memcpy(&decimalConvert[0], "CONVERT", 9);
+                        memcpy(&decimalValueException[0], "VALUE MUST BE BETWEEN [1-255]!", 31);
+                        memcpy(&decimalAskRes[0], "The decimal equivalent to [      ] is", 48);
+                        memcpy(&returnDecimal[0], "PRESS [SPACE] TO RETURN", 24);
+                        
+                        memcpy(&langText[0], "LANGUAGES", 16);
+                        
+                        langTextX = 790;
+                        langTextY = 500;
+                        langTextS = 25;
+                        
+                        titleX = 120;
+                        TextBinaryX = 350;
+                        TextDecimalX = 340;
+                        
+                    } else if (norwegianLang) { // Replaces english with norwegian!!!
+    
+                        memcpy(&TextBinary[0], "BINÆR", 6);
+                        memcpy(&TextDecimal[0], "TITALL", 7);
+                        
+                        memcpy(&title[0], "Binær- & Titallskonverter", 27);
+                        
+                        memcpy(&binaryAsk[0], "Vennligst tast inn et BINÆRTALL\n         for å konvertere\n         (00000000 - 11111111)", 98);
+                        memcpy(&binaryConvert[0], "KONVERTER", 9);
+                        memcpy(&binaryAskResult[0], "Binærtallet som tilsvarer til [              ] er", 48);
+                        memcpy(&returnBinary[0], "TRYKK [SPACE] TIL MENYEN", 24);
+                        
+                        memcpy(&decimalAsk[0], "Vennligst tast inn et TITALL\n      for å konvertere\n            (1-255)", 89);
+                        memcpy(&decimalConvert[0], "KONVERTER", 9);
+                        memcpy(&decimalValueException[0], "VERDIEN MÅ VÆRE MELLOM 1-255", 31);
+                        memcpy(&decimalAskRes[0], "Titallet som tilsvarer til [      ] er", 48);
+                        memcpy(&returnDecimal[0], "TRYKK [SPACE] TIL MENYEN", 24);
+                        
+                        memcpy(&langText[0], "SPRÅK", 16);
+                        langTextX = 805;
+                        langTextY = 495;
+                        langTextS = 30;
+                        
+                        titleX = 125;
+                        TextBinaryX = 355;
+                        TextDecimalX = 345;
+                    }
                 }
                 
             }
