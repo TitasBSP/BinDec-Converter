@@ -81,7 +81,7 @@ int main()
     float langBarY = 480;
     Rectangle langBar = {langBarX, langBarY, 200, 100};
     
-    float langTextX = 790;
+    float langTextX = 800;
     float langTextY = 500;
     float langTextS = 30;
     
@@ -93,9 +93,19 @@ int main()
     
     float alphaLangPop = 0.0f;
     
+    float btnNorskX = 780;
+    float btnNorskY = 380;
+    Rectangle btnNorsk = {btnNorskX, btnNorskY, 150, 40};
+    
+    float btnEnglishX = 780;
+    float btnEnglishY = 430;
+    Rectangle btnEnglish = {btnEnglishX, btnEnglishY, 150, 40};
+    
+    float invisBtnNorsk = 1.0f;
+    float invisBtnEnglish = 1.0f;
+    
     // --------------------- MISCELLANEOUS ------------------------ //
     
-
     InitWindow(screenWidth, screenHeight, "Binary & Decimal Converter");
 
     SetTargetFPS(60);
@@ -143,9 +153,33 @@ int main()
     
     //---------------------------------- NORWEGIAN LANGUAGE ---------------------------------//
     
-    if (englishLang && !norwegianLang) {
-        main();
-    } else if (!englishLang && norwegianLang) { // Replaces english with norwegian!!!
+    if (englishLang) {
+        memcpy(&TextBinary[0], "BINARY", 6);
+        memcpy(&TextDecimal[0], "DECIMAL", 7);
+        
+        memcpy(&title[0], "Binary & Decimal Converter", 27);
+        
+        memcpy(&binaryAsk[0], "Please enter a BINARY number to convert\n               (00000000 - 11111111)", 98);
+        memcpy(&binaryConvert[0], "CONVERT", 9);
+        memcpy(&binaryAskResult[0], "The binary equivalent to [              ] is", 48);
+        memcpy(&returnBinary[0], "PRESS [SPACE] TO RETURN", 24);
+        
+        memcpy(&decimalAsk[0], "Please enter a DECIMAL number to convert\n                       (1-255)", 89);
+        memcpy(&decimalConvert[0], "CONVERT", 9);
+        memcpy(&decimalValueException[0], "VALUE MUST BE BETWEEN [1-255]!", 31);
+        memcpy(&decimalAskRes[0], "The decimal equivalent to [      ] is", 48);
+        memcpy(&returnDecimal[0], "PRESS [SPACE] TO RETURN", 24);
+        
+        memcpy(&langText[0], "LANGUAGES", 16);
+        langTextX -= 15;
+        langTextY += 5;
+        langTextS -= 5;
+        
+        titleX -= 5;
+        TextBinaryX -= 5;
+        TextDecimalX -= 5;
+        
+    } else if (norwegianLang) { // Replaces english with norwegian!!!
     
         memcpy(&TextBinary[0], "BINÆR", 6);
         memcpy(&TextDecimal[0], "TITALL", 7);
@@ -173,15 +207,6 @@ int main()
         TextDecimalX += 5;
     }
     
-    // What needs adjusting:
-    // o title by x += 10
-    // o textBinary and decimal by x += 5
-    // o convert button
-    // o red text for equivalent
-    // o 
-
-    
-    
     //-------------------------------- Handling user input --------------------------------//
     
     char binaryInput[9] = "";
@@ -206,6 +231,10 @@ int main()
         bool isHoveringDecimal = CheckCollisionPointRec(mousePos, ButtonDecimal);
         
         bool isHoveringLangBar = CheckCollisionPointRec(mousePos, langBar);
+        bool isHoveringLangPopUp = CheckCollisionPointRec(mousePos, langPopUp);
+        
+        bool isHoveringBtnNorsk = CheckCollisionPointRec(mousePos, btnNorsk);
+        bool isHoveringBtnEnglish = CheckCollisionPointRec(mousePos, btnEnglish);
         
         bool isHoveringConvertBinary = CheckCollisionPointRec(mousePos, convertBinary);
         bool isHoveringConvertDecimal = CheckCollisionPointRec(mousePos, convertDecimal);
@@ -325,88 +354,130 @@ int main()
             while (alphaLangPop < 1.0f) {
                alphaLangPop += 0.05f; // Fade-in animation
                              
-            }
-            DrawRectangleRec(langPopUp, Fade(DARKBLUE, alphaLangPop)); 
-            
-            // NORWEGIAN FLAG //
-            
-            // Row 1
-            DrawRectangle(780, 390, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(785, 390, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(790, 390, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(795, 390, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(800, 390, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(805, 390, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(810, 390, 5, 5, Fade(RED, alphaLangPop));
-            
-            // Row 2
-            DrawRectangle(780, 395, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(785, 395, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(790, 395, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(795, 395, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(800, 395, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(805, 395, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(810, 395, 5, 5, Fade(WHITE, alphaLangPop));
-            
-            // Row 3
-            DrawRectangle(780, 400, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(785, 400, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(790, 400, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(795, 400, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(800, 400, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(805, 400, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(810, 400, 5, 5, Fade(BLUE, alphaLangPop));
-            
-            // Row 4
-            DrawRectangle(780, 405, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(785, 405, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(790, 405, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(795, 405, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(800, 405, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(805, 405, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(810, 405, 5, 5, Fade(WHITE, alphaLangPop));
-            
-            // Row 5
-            DrawRectangle(780, 410, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(785, 410, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(790, 410, 5, 5, Fade(BLUE, alphaLangPop));
-            DrawRectangle(795, 410, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(800, 410, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(805, 410, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(810, 410, 5, 5, Fade(RED, alphaLangPop));
-            
-            // ENGLISH FLAG //
-            
-            // Row 1
-            DrawRectangle(780, 440, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(785, 440, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(790, 440, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(795, 440, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(800, 440, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(805, 440, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(810, 440, 5, 5, Fade(WHITE, alphaLangPop));
-            
-            // Row 2
-            DrawRectangle(780, 445, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(785, 445, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(790, 445, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(795, 445, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(800, 445, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(805, 445, 5, 5, Fade(WHITE, alphaLangPop));
-            DrawRectangle(810, 445, 5, 5, Fade(WHITE, alphaLangPop));
-            
-            // Row 3
-            DrawRectangle(780, 450, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(785, 450, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(790, 450, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(795, 450, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(800, 450, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(805, 450, 5, 5, Fade(RED, alphaLangPop));
-            DrawRectangle(810, 450, 5, 5, Fade(RED, alphaLangPop));
-            
+            }         
         }
-        
-       
+   
+        if (isHoveringLangBar || isHoveringLangPopUp) {
+                DrawRectangleRec(langPopUp, Fade(DARKBLUE, alphaLangPop)); 
+                
+                // NORWEGIAN FLAG //
+                
+                // Row 1
+                DrawRectangle(780, 390, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(785, 390, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(790, 390, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(795, 390, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(800, 390, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(805, 390, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(810, 390, 5, 5, Fade(RED, alphaLangPop));
+                
+                // Row 2
+                DrawRectangle(780, 395, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(785, 395, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(790, 395, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(795, 395, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(800, 395, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(805, 395, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(810, 395, 5, 5, Fade(WHITE, alphaLangPop));
+                
+                // Row 3
+                DrawRectangle(780, 400, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(785, 400, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(790, 400, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(795, 400, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(800, 400, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(805, 400, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(810, 400, 5, 5, Fade(BLUE, alphaLangPop));
+                
+                // Row 4
+                DrawRectangle(780, 405, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(785, 405, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(790, 405, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(795, 405, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(800, 405, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(805, 405, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(810, 405, 5, 5, Fade(WHITE, alphaLangPop));
+                
+                // Row 5
+                DrawRectangle(780, 410, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(785, 410, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(790, 410, 5, 5, Fade(BLUE, alphaLangPop));
+                DrawRectangle(795, 410, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(800, 410, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(805, 410, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(810, 410, 5, 5, Fade(RED, alphaLangPop));
+                
+                DrawText("Norsk", 825, 390, 25, Fade(WHITE, alphaLangPop));
+                
+                // ENGLISH FLAG //
+                
+                // Row 1
+                DrawRectangle(780, 440, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(785, 440, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(790, 440, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(795, 440, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(800, 440, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(805, 440, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(810, 440, 5, 5, Fade(WHITE, alphaLangPop));
+                
+                // Row 2
+                DrawRectangle(780, 445, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(785, 445, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(790, 445, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(795, 445, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(800, 445, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(805, 445, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(810, 445, 5, 5, Fade(WHITE, alphaLangPop));
+                
+                // Row 3
+                DrawRectangle(780, 450, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(785, 450, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(790, 450, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(795, 450, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(800, 450, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(805, 450, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(810, 450, 5, 5, Fade(RED, alphaLangPop));
+                
+                // Row 4
+                DrawRectangle(780, 455, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(785, 455, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(790, 455, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(795, 455, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(800, 455, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(805, 455, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(810, 455, 5, 5, Fade(WHITE, alphaLangPop));
+                
+                // Row 5
+                DrawRectangle(780, 460, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(785, 460, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(790, 460, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(795, 460, 5, 5, Fade(RED, alphaLangPop));
+                DrawRectangle(800, 460, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(805, 460, 5, 5, Fade(WHITE, alphaLangPop));
+                DrawRectangle(810, 460, 5, 5, Fade(WHITE, alphaLangPop));
+                
+                DrawText("English", 825, 440, 25, Fade(WHITE, alphaLangPop));
+                
+                DrawRectangleRec(btnNorsk, Fade(RED, invisBtnNorsk));
+                DrawRectangleRec(btnEnglish, Fade(RED, invisBtnEnglish));
+                
+                if (isHoveringBtnNorsk && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && clearScreen == false) {
+                    norwegianLang = true;
+                    englishLang = false;
+                    
+                    printf("norsk working");
+                    fflush(stdout);
+                    
+                    
+                } else if (isHoveringBtnEnglish && IsMouseButtonPressed(MOUSE_LEFT_BUTTON) && clearScreen == false) {
+                    norwegianLang = false;
+                    englishLang = true;
+                    
+                    printf("english working");
+                    fflush(stdout);
+                }
+                
+            }
         
         // ---------------------------- BINARY ---------------------------- //
         
